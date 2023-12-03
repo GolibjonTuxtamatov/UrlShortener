@@ -9,7 +9,7 @@ builder.Services.AddTransient<IUrlService, UrlService>();
 
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
+if (!app.Environment.IsProduction())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
