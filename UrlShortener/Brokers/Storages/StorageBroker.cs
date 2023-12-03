@@ -19,5 +19,7 @@ namespace UrlShortener.Brokers.Storages
 
             optionsBuilder.UseSqlite(connectionString);
         }
+
+        public override void Dispose() { }
     }
 }
