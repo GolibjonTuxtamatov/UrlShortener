@@ -38,5 +38,8 @@ namespace UrlShortener.Services.Foundations.Urls
 
             return urlDto;
         }
+
+        public IQueryable<Url> RerieveAllUrls() =>
+            this.storageBroker.SelectAllUrls();
     }
 }
