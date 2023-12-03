@@ -7,12 +7,12 @@ namespace UrlShortener.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
         private readonly IUrlService urlService;
 
-        public HomeController(ILogger<HomeController> logger, IUrlService urlService = null)
+        public HomeController(ILogger<HomeController> logger, IUrlService urlService)
         {
-            _logger = logger;
+            logger = logger;
             this.urlService = urlService;
         }
 
@@ -26,6 +26,10 @@ namespace UrlShortener.Controllers
         {
             UrlDto url = this.urlService.AddUrlAsync(urlDto, HttpContext).Result;
 
+            if(url == null)
+            {
+                logger.LogInformation("Post url is nul");
+            }
             return View("Index", url);
         }
 
@@ -33,7 +37,10 @@ namespace UrlShortener.Controllers
         public IActionResult RedirectToLongUrl(string shortUrl)
         {
             Url url = this.urlService.RetrieveUrlByName(shortUrl).Result;
-
+            if(url is null)
+            {
+                logger.LogInformation("Redirect org url not found");
+            }
             return Redirect(url.OrginalUrl);
         }
     }
