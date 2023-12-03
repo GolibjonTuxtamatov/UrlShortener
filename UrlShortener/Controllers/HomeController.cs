@@ -1,32 +1,32 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using UrlShortener.Models;
+using UrlShortener.Services.Foundations.Urls;
 
 namespace UrlShortener.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUrlService urlService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUrlService urlService = null)
         {
             _logger = logger;
+            this.urlService = urlService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(UrlDto urlDto)
         {
-            return View();
+            return View(urlDto);
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult PostUrl(UrlDto urlDto)
         {
-            return View();
-        }
+            UrlDto url = this.urlService.AddUrlAsync(urlDto, HttpContext).Result;
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View("Index", url);
         }
     }
 }

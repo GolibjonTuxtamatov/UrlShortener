@@ -12,7 +12,7 @@ namespace UrlShortener.Services.Foundations.Urls
             this.storageBroker = storageBroker;
         }
 
-        public async ValueTask<UrlDto> AddUrlsAsync(UrlDto urlDto, HttpContext context)
+        public async ValueTask<UrlDto> AddUrlAsync(UrlDto urlDto, HttpContext context)
         {
             if (!Uri.TryCreate(urlDto.Url, UriKind.Absolute, out var uri))
                 Results.BadRequest("Invalid url");
