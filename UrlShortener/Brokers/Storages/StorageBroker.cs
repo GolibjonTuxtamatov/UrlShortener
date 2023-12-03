@@ -1,9 +1,10 @@
 ﻿using EFxceptions;
 using Microsoft.EntityFrameworkCore;
+using UrlShortener.Models;
 
 namespace UrlShortener.Brokers.Storages
 {
-    public partial class StorageBroker : EFxceptionsContext
+    public partial class StorageBroker : EFxceptionsContext, IStorageBroker
     {
         private readonly IConfiguration configuration;
 
