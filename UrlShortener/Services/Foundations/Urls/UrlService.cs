@@ -39,7 +39,15 @@ namespace UrlShortener.Services.Foundations.Urls
             return urlDto;
         }
 
-        public IQueryable<Url> RerieveAllUrls() =>
+        public IQueryable<Url> RetrieveAllUrls() =>
             this.storageBroker.SelectAllUrls();
+
+        public async ValueTask<Url> RetrieveUrlByName(string shortUrl)
+        {
+            var url = RetrieveAllUrls().FirstOrDefault(u =>
+                u.ShortUrl == shortUrl);
+
+            return url;
+        }
     }
 }
