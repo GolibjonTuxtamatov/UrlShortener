@@ -28,5 +28,13 @@ namespace UrlShortener.Controllers
 
             return View("Index", url);
         }
+
+        [Route("/{shortUrl}")]
+        public IActionResult RedirectToLongUrl(string shortUrl)
+        {
+            Url url = this.urlService.RetrieveUrlByName(shortUrl).Result;
+
+            return Redirect(url.OrginalUrl);
+        }
     }
 }
