@@ -18,5 +18,12 @@ namespace UrlShortener.Brokers.Storages
             return storedUrl.Entity;
         }
 
+        public IQueryable<Url> SelectAllUrls()
+        {
+            using var broker = new StorageBroker(this.configuration);
+
+            return broker.Urls;
+        }
+
     }
 }
