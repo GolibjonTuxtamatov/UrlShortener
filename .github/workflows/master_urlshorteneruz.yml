@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'urlshorteneruz'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_27DF9B7F13F14B09BC90D893CD3655D8 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_147853707C0A48C48C9C0945E7E53A87 }}
           package: .
