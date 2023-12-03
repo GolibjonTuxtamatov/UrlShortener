@@ -1,9 +1,11 @@
 using UrlShortener.Brokers.Storages;
+using UrlShortener.Services.Foundations.Urls;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IStorageBroker, StorageBroker>();
+builder.Services.AddTransient<IUrlService, UrlService>();
 
 var app = builder.Build();
 
