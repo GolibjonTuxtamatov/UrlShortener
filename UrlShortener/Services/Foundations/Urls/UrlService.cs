@@ -6,10 +6,12 @@ namespace UrlShortener.Services.Foundations.Urls
     public class UrlService : IUrlService
     {
         private readonly IStorageBroker storageBroker;
+        private readonly ILogger<UrlService> logger;
 
-        public UrlService(IStorageBroker storageBroker)
+        public UrlService(IStorageBroker storageBroker,ILogger<UrlService> logger)
         {
             this.storageBroker = storageBroker;
+            this.logger = logger;
         }
 
         public async ValueTask<UrlDto> AddUrlAsync(UrlDto urlDto, HttpContext context)
