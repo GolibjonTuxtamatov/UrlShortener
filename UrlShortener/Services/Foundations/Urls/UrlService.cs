@@ -44,7 +44,7 @@ namespace UrlShortener.Services.Foundations.Urls
             }
             catch (Exception ex)
             {
-
+                logger.LogError(ex.Message);
                 throw ex;
             }
         }
