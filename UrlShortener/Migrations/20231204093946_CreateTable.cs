@@ -15,9 +15,9 @@ namespace UrlShortener.Migrations
                 name: "Urls",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    OrginalUrl = table.Column<string>(type: "TEXT", nullable: false),
-                    ShortUrl = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrginalUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShortUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
