@@ -16,7 +16,7 @@ namespace UrlShortener.Brokers.Storages
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = this.configuration.GetConnectionString("DefaultConnection");
+            string connectionString = "Data Source = wwwroot\\Data\\Urls.db";
 
             optionsBuilder.UseSqlite(connectionString);
         }
