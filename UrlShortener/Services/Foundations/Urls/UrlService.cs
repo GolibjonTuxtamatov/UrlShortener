@@ -18,27 +18,30 @@ namespace UrlShortener.Services.Foundations.Urls
         {
             try
             {
-                if (!Uri.TryCreate(urlDto.Url, UriKind.Absolute, out var uri))
-                    Results.BadRequest("Invalid url");
+                if (Uri.TryCreate(urlDto.Url, UriKind.Absolute, out var uri))
+                {
+                    var random = new Random();
+                    const string chars =
+                        "QWERTYUIOPASDFGHJKLZXCVBNM1234567890@qwertyuiopasdfghjklzxcvbnm";
 
-                var random = new Random();
-                const string chars =
-                    "QWERTYUIOPASDFGHJKLZXCVBNM1234567890@qwertyuiopasdfghjklzxcvbnm";
+                    string randomString =
+                        new string(Enumerable.Repeat(chars, 8)
+                        .Select(x => x[random.Next(x.Length)]).ToArray());
 
-                string randomString =
-                    new string(Enumerable.Repeat(chars, 8)
-                    .Select(x => x[random.Next(x.Length)]).ToArray());
+                    var storedUrl = await this.storageBroker.InsertUrlAsync(
+                        new Url
+                        {
+                            OrginalUrl = urlDto.Url,
+                            ShortUrl = randomString,
+                        });
 
-                var storedUrl = await this.storageBroker.InsertUrlAsync(
-                    new Url
-                    {
-                        OrginalUrl = urlDto.Url,
-                        ShortUrl = randomString,
-                    });
+                    string result = $"{context.Request.Scheme}://{context.Request.Host}/{storedUrl.ShortUrl}";
 
-                string result = $"{context.Request.Scheme}://{context.Request.Host}/{storedUrl.ShortUrl}";
+                    urlDto.Url = result;
 
-                urlDto.Url = result;
+                    return urlDto;
+                }
+                urlDto.Url = "Url is invalid";
 
                 return urlDto;
             }
